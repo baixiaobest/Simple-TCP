@@ -1,4 +1,4 @@
-# Simple TCP implementatioin with UDP
+# Simple TCP implementation with UDP
 
 This simple TCP protocol is implemented on top of UDP, and uses **Go Back N** protocol to acheive reliable data transfer.
 There is a receive that request the file and a sender that send the file.
