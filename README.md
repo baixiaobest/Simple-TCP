@@ -6,6 +6,8 @@ There is a receive that request the file and a sender that send the file.
 
 ## Packet Header Design
 
+|                                 |
+|---------------------------------|
 |        Source IP Address        |
 |   source Port   |   checksum    |
 |          Sequence Number        |
