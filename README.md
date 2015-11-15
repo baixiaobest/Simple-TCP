@@ -6,7 +6,7 @@ There is a receive that request the file and a sender that send the file.
 
 ## Packet Header Design
 
-|                                 |
+|  16 Bit Field   | 16 Bit Field  |
 |-----------------|---------------|
 |        Source IP Address        |
 |   source Port   |   checksum    |
