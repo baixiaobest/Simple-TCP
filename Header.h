@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-enum checkSumMode {CHEKSUM_INC, CHEKSUM_NOTINC};
-
 #define HEADERSIZE 14 //14 bytes header size in the packet
 
 typedef struct{
@@ -23,6 +21,11 @@ NOTICE: When header is feed into buffer, dataLength and checkSum are zeros.
 **/
 void constructHeader(char* buffer, header_t header);
 
+/**
+This function extract header info from buffer
+**/
+void extractHeader(char* buffer, header_t* header);
+
 
 /**
 buffer: buffer to put data
@@ -35,8 +38,7 @@ void appendData(char* buffer, char* data, unsigned int dataLength);
 
 /**
 buffer: buffer to calculate checksum
-checkSumMode: whether to calculate checksum with checksum field included.
 **/
-uint16_t calculateChecksum(char*buffer, checkSumMode mode);
+uint16_t calculateChecksum(char*buffer);
 
 #endif

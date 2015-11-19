@@ -44,10 +44,14 @@ int main(int argc, char* argv[]){
     
     //define header info
     header.checkSum_m = uint16_t(0);
-    header.sequenceNumber_m = uint32_t(10);
-    header.ACKNumber_m = uint32_t(20);
+    header.sequenceNumber_m = uint32_t(1);
+    header.ACKNumber_m = uint32_t(0);
     header.dataLength_m = uint16_t(0);
     header.command_m = uint16_t(1);
+    //construct pseudo header with checksum = 0
+    constructHeader(buffer, header);
+    uint16_t checkSum = calculateChecksum(buffer);
+    header.checkSum_m = checkSum;
     constructHeader(buffer, header);
     
     if(sendto(socketfd, (void*) buffer, (size_t)20, 0, (struct sockaddr *) &senderAddress, sizeof(senderAddress)) < 0){

@@ -26,6 +26,7 @@ int main(int argc, char* argv[]){
     char* receiverIP;
     int receiverPort;
     char buffer[20];
+    header_t header;
     if (argc < 2) {
         cout << "Expect port number";
         return 1;
@@ -47,6 +48,10 @@ int main(int argc, char* argv[]){
     receiverPort = ntohs(receiverAddr.sin_port);
     
     cout << "Receiver IP: " << receiverIP << "Receiver Port: " << receiverPort << endl;
+    
+    extractHeader(buffer, &header);
+    uint16_t checksum = calculateChecksum(buffer);
+    cout << "Checksum is: " << checksum << endl;
     
     return 0;
 }
