@@ -10,7 +10,7 @@ There is a receive that request the file and a sender that send the file.
 |-----------------|------------------|
 |Source IP Address|Source IP Address |
 |   source Port   |     checksum     |
-| Sequence Number | Sequency Number  |
+| Sequence Number | Sequence Number  |
 |    ACK Number   |     ACK Number   |
 |   Data Length   |     Command      |
 |...............DATA.................|
