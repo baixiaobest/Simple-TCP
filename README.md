@@ -8,8 +8,7 @@ There is a receive that request the file and a sender that send the file.
 
 |  16 Bit Field   |   16 Bit Field   |
 |-----------------|------------------|
-|Source IP Address|Source IP Address |
-|   source Port   |     checksum     |
+|     checksum    |                  |
 | Sequence Number | Sequence Number  |
 |    ACK Number   |     ACK Number   |
 |   Data Length   |     Command      |
@@ -25,7 +24,7 @@ There are 3 command types:
 In case of ACK packet, data field contains no packet, data length is thus zero.
 
 ### Maximum data field size
-The maximum size of packet is 1 Kb, thus the maximum size of data a packet can carry over UDP is 1004 bytes.
+The maximum size of packet is 1 Kb, the header size is 14 bytes, thus the maximum size of data a packet can carry over UDP is 1010 bytes.
 
 
 ## Checksum Calculation
@@ -34,3 +33,15 @@ On the sender side, header and data **Except** checksum field are added together
 On the receiver side, the checksum is done to header (including checksum field) and data. If the result is zeros, then there is no data corrupt, otherwise, corruption occurs
 
 In case that packet size is not size of multiple of 16 bits, we append padding zeros to data field during calculation.
+
+
+## How to compile
+type 
+	$:make 
+in terminal, two executables will be built, receiver and sender.
+To run receiver:
+	$:./receiver <senderIP> <senderPort> <filename>
+To run sender:
+	$:./sender <port to bind>
+
+**NOTICE**: You need to run sender before running receiver.
