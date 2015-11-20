@@ -16,6 +16,7 @@
 #include <strings.h>
 
 #include "Header.h"
+#include "GobackN.h"
 #include <iostream>
 
 using namespace std;
@@ -25,7 +26,8 @@ int main(int argc, char* argv[]){
     struct sockaddr_in myAddress, receiverAddr;
     char* receiverIP;
     int receiverPort;
-    char buffer[20];
+    char buffer[MAX_PACKET_SIZE];
+    char *dataBuffer;
     header_t header;
     if (argc < 2) {
         cout << "Expect port number";
@@ -43,15 +45,17 @@ int main(int argc, char* argv[]){
         cout << "Failed to bind to port" << endl;
     }
     socklen_t addrlen;
-    recvfrom(socketfd, buffer, 20, 0, (struct sockaddr *) &receiverAddr, &addrlen);
+    //first get the header
+    recvfrom(socketfd, buffer, MAX_PACKET_SIZE, 0, (struct sockaddr *) &receiverAddr, &addrlen);
     receiverIP = inet_ntoa(receiverAddr.sin_addr);
     receiverPort = ntohs(receiverAddr.sin_port);
     
     cout << "Receiver IP: " << receiverIP << "Receiver Port: " << receiverPort << endl;
-    
     extractHeader(buffer, &header);
     uint16_t checksum = calculateChecksum(buffer);
     cout << "Checksum is: " << checksum << endl;
+    cout << "Requesting file: ";
+    fwrite(&buffer[HEADERSIZE], header.dataLength_m, 1, stdout);
     
     return 0;
 }

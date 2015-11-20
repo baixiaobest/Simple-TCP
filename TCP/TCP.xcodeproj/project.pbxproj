@@ -25,6 +25,8 @@
 		A9C073461BFDB3C2001870DF /* Receiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Receiver.cpp; path = ../../Receiver.cpp; sourceTree = "<group>"; };
 		A9C073471BFDB9E5001870DF /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../../Makefile; sourceTree = "<group>"; };
 		A9C0734B1BFE4D4F001870DF /* Sender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sender.cpp; path = ../../Sender.cpp; sourceTree = "<group>"; };
+		A9C0734C1BFEEA33001870DF /* GobackN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GobackN.cpp; path = ../../GobackN.cpp; sourceTree = "<group>"; };
+		A9C0734D1BFEEA33001870DF /* GobackN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GobackN.h; path = ../../GobackN.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,8 @@
 				A9C073441BFDB3C2001870DF /* Header.cpp */,
 				A9C073461BFDB3C2001870DF /* Receiver.cpp */,
 				A9C0734B1BFE4D4F001870DF /* Sender.cpp */,
+				A9C0734D1BFEEA33001870DF /* GobackN.h */,
+				A9C0734C1BFEEA33001870DF /* GobackN.cpp */,
 			);
 			path = TCP;
 			sourceTree = "<group>";

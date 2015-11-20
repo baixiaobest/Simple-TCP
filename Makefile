@@ -1,7 +1,7 @@
 CC= g++
 CFLAGS= -I. -g
-OBJS_RECEIVER= Receiver.o Header.o
-OBJS_SENDER= Sender.o Header.o
+OBJS_RECEIVER= Receiver.o Header.o GobackN.o
+OBJS_SENDER= Sender.o Header.o GobackN.o
 
 all: receiver sender
 
@@ -20,7 +20,8 @@ Sender.o: Sender.cpp Header.h
 Header.o: Header.h Header.cpp
 	$(CC) -c $(CFLAGS) Header.cpp
 
-
+GobackN.o: GobackN.h GobackN.cpp Header.h
+	$(CC) -c $(CFLAGS) GobackN.cpp
 
 clean:
 	\rm *.o ./receiver ./sender

@@ -41,7 +41,7 @@ void extractHeader(char* buffer, header_t* header){
 }
 
 void appendData(char* buffer, char* data, unsigned int dataLength){
-    int offset = 20;
+    int offset = HEADERSIZE;
     for (int i=0; i<dataLength; i++) {
         buffer[offset+i] = data[i];
     }
