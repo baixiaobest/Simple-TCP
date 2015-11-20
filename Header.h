@@ -5,8 +5,9 @@
 
 #define HEADERSIZE 14 //14 bytes header size in the packet
 
+enum COMMAND{DATA, REQUEST, ACK};
+
 typedef struct{
-	int socketFd_m;
 	uint16_t checkSum_m;
 	uint32_t sequenceNumber_m;
 	uint32_t ACKNumber_m;
