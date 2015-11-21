@@ -46,7 +46,7 @@ int listenForRequest(gobackn_t* gobackn, sockaddr_in* receiverAddr, socklen_t* a
     char buffer[MAX_PACKET_SIZE];
     header_t header;
     char filename[MAX_FILENAME_SIZE];
-    uint32_t nextSeqNumber = gobackn->seqstart;
+    uint32_t nextSeqNumber = gobackn->seqstart_m;
     
     recvfrom(gobackn->socket_m, buffer, MAX_PACKET_SIZE, 0, (struct sockaddr*) receiverAddr, addrlen);
     extractHeader(buffer, &header);
