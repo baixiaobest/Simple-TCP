@@ -62,10 +62,10 @@
 				A9C073471BFDB9E5001870DF /* Makefile */,
 				A9C073451BFDB3C2001870DF /* Header.h */,
 				A9C073441BFDB3C2001870DF /* Header.cpp */,
-				A9C073461BFDB3C2001870DF /* Receiver.cpp */,
-				A9C0734B1BFE4D4F001870DF /* Sender.cpp */,
 				A9C0734D1BFEEA33001870DF /* GobackN.h */,
 				A9C0734C1BFEEA33001870DF /* GobackN.cpp */,
+				A9C073461BFDB3C2001870DF /* Receiver.cpp */,
+				A9C0734B1BFE4D4F001870DF /* Sender.cpp */,
 			);
 			path = TCP;
 			sourceTree = "<group>";

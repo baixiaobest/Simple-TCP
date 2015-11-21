@@ -29,6 +29,7 @@ int main(int argc, char* argv[]){
     char buffer[MAX_PACKET_SIZE];
     char *dataBuffer;
     header_t header;
+    gobackn_t gobackn;
     if (argc < 2) {
         cout << "Expect port number";
         return 1;
@@ -45,17 +46,24 @@ int main(int argc, char* argv[]){
         cout << "Failed to bind to port" << endl;
     }
     socklen_t addrlen;
-    //first get the header
-    recvfrom(socketfd, buffer, MAX_PACKET_SIZE, 0, (struct sockaddr *) &receiverAddr, &addrlen);
-    receiverIP = inet_ntoa(receiverAddr.sin_addr);
-    receiverPort = ntohs(receiverAddr.sin_port);
+//    //first get the header
+//    recvfrom(socketfd, buffer, MAX_PACKET_SIZE, 0, (struct sockaddr *) &receiverAddr, &addrlen);
+//    receiverIP = inet_ntoa(receiverAddr.sin_addr);
+//    receiverPort = ntohs(receiverAddr.sin_port);
+//    
+//    cout << "Receiver IP: " << receiverIP << "Receiver Port: " << receiverPort << endl;
+//    extractHeader(buffer, &header);
+//    uint16_t checksum = calculateChecksum(buffer);
+//    cout << "Checksum is: " << checksum << endl;
+//    cout << "Requesting file: ";
+//    fwrite(&buffer[HEADERSIZE], header.dataLength_m, 1, stdout);
     
-    cout << "Receiver IP: " << receiverIP << "Receiver Port: " << receiverPort << endl;
-    extractHeader(buffer, &header);
-    uint16_t checksum = calculateChecksum(buffer);
-    cout << "Checksum is: " << checksum << endl;
-    cout << "Requesting file: ";
-    fwrite(&buffer[HEADERSIZE], header.dataLength_m, 1, stdout);
+    gobackn.socket_m = socketfd;
+    gobackn.seqstart_m = (uint32_t) 0;
+    gobackn.seqend_m = gobackn.seqstart_m + WINDOWSIZE;
+    if(listenForRequest(&gobackn, &receiverAddr, &addrlen) < 0){
+        cout << "Cannot open file" << endl;
+    }
     
     return 0;
 }

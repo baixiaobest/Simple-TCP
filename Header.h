@@ -32,7 +32,7 @@ void extractHeader(char* buffer, header_t* header);
 buffer: buffer to put data
 data: data to append to buffer
 dataLength: length of data to append to buffer
-This function will also change the dataLenth field of buffer.
+This function will NOT change the dataLenth field of buffer.
 **/
 void appendData(char* buffer, char* data, unsigned int dataLength);
 

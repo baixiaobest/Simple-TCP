@@ -14,7 +14,9 @@
 #include "Header.h"
 
 #define WINDOWSIZE 10         //size in number of packets
-#define MAX_PACKET_SIZE 1000  //size in bytes
+#define MAX_PACKET_SIZE 1024  //size in bytes
+#define MAX_FILENAME_SIZE 100
+#define TIMER_EXPIRE 100
 
 typedef struct{
      /*requested file descriptor. For receiver, it is the file on disk to save to.
@@ -41,13 +43,15 @@ int requestFile(gobackn_t* gobackn, char* fileName);
 /*
 This function listen for connection, when a request for file is received, function open up file descriptor for file and returns. This is a blocking function.
 @ gobackn: It keeps info about connection and window size. seqstart_m and seqend_m should be specified before calling this function
+@ receiverAddr receiver's address
+@ addrlen address length
 @ return: -1 when requested file not found. >=0 on success
 */
-int listenForRequest(gobackn_t* gobackn);
+int listenForRequest(gobackn_t* gobackn, sockaddr_in* receiverAddr, socklen_t* addrlen);
 
 /*
 This function sends requested file to receiver.
 */
-int sendRequestedFile(gobackn_t* gobackn);
+int sendRequestedFile(gobackn_t* gobackn, sockaddr_in* receiverAddr);
 
 #endif
