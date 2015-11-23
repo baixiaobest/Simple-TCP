@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9C073351BFDB133001870DF"
-               BuildableName = "TCP"
-               BlueprintName = "TCP"
-               ReferencedContainer = "container:TCP.xcodeproj">
+               BlueprintIdentifier = "A933497D1C03D38A005812F5"
+               BuildableName = "tcp"
+               BlueprintName = "tcp"
+               ReferencedContainer = "container:tcp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9C073351BFDB133001870DF"
-            BuildableName = "TCP"
-            BlueprintName = "TCP"
-            ReferencedContainer = "container:TCP.xcodeproj">
+            BlueprintIdentifier = "A933497D1C03D38A005812F5"
+            BuildableName = "tcp"
+            BlueprintName = "tcp"
+            ReferencedContainer = "container:tcp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,10 +52,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9C073351BFDB133001870DF"
-            BuildableName = "TCP"
-            BlueprintName = "TCP"
-            ReferencedContainer = "container:TCP.xcodeproj">
+            BlueprintIdentifier = "A933497D1C03D38A005812F5"
+            BuildableName = "tcp"
+            BlueprintName = "tcp"
+            ReferencedContainer = "container:tcp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9C073351BFDB133001870DF"
-            BuildableName = "TCP"
-            BlueprintName = "TCP"
-            ReferencedContainer = "container:TCP.xcodeproj">
+            BlueprintIdentifier = "A933497D1C03D38A005812F5"
+            BuildableName = "tcp"
+            BlueprintName = "tcp"
+            ReferencedContainer = "container:tcp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

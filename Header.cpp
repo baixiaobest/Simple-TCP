@@ -33,11 +33,12 @@ void constructHeader(char* buffer, header_t header){
 }
 
 void extractHeader(char* buffer, header_t* header){
-    header->checkSum_m = ( ((uint16_t)buffer[0]) << 8 ) | ( (uint16_t) buffer[1] );
-    header->sequenceNumber_m = (( (uint32_t) buffer[2] ) << 24) | ( ((uint32_t) buffer[3]) << 16 ) | (((uint32_t) buffer[4]) << 8) | ((uint32_t) buffer[5]);
-    header->ACKNumber_m = (( (uint32_t) buffer[6] ) << 24) | ( ((uint32_t) buffer[7]) << 16 ) | (((uint32_t) buffer[8]) << 8) | ((uint32_t) buffer[9]);
-    header->dataLength_m = ( ((uint16_t)buffer[10]) << 8 ) | ( (uint16_t) buffer[11] );
-    header->command_m = ( ((uint16_t)buffer[12]) << 8 ) | ( (uint16_t) buffer[13] );
+    header->checkSum_m = ( (uint16_t) (buffer[0] & 0xFF)  << 8 ) | ( (uint16_t) (buffer[1] & 0xFF) );
+    header->sequenceNumber_m = (( (uint32_t) buffer[2] & 0xFF ) << 24) | ( ((uint32_t) buffer[3]& 0xFF) << 16 ) | (((uint32_t) buffer[4] & 0xFF) << 8) | ((uint32_t) buffer[5] & 0xFF);
+    
+    header->ACKNumber_m = (( (uint32_t) buffer[6] & 0xFF ) << 24) | ( ((uint32_t) buffer[7] & 0xFF) << 16 ) | (((uint32_t) buffer[8] & 0xFF) << 8) | ((uint32_t) buffer[9] & 0xFF);
+    header->dataLength_m = ( ((uint16_t)buffer[10] & 0xFF) << 8 ) | ( (uint16_t) buffer[11] & 0xFF );
+    header->command_m = ( ((uint16_t)buffer[12] & 0xFF) << 8 ) | ( (uint16_t) buffer[13] & 0xFF );
 }
 
 void appendData(char* buffer, char* data, unsigned int dataLength){

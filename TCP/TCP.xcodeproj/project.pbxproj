@@ -6,8 +6,16 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A93349A01C03D533005812F5 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = A933499F1C03D533005812F5 /* Makefile */; };
+		A93349A71C03D577005812F5 /* GobackN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93349A11C03D577005812F5 /* GobackN.cpp */; };
+		A93349A81C03D577005812F5 /* Header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93349A31C03D577005812F5 /* Header.cpp */; };
+		A93349A91C03D577005812F5 /* Receiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93349A51C03D577005812F5 /* Receiver.cpp */; };
+		A93349AA1C03D577005812F5 /* Sender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93349A61C03D577005812F5 /* Sender.cpp */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		A9C073341BFDB133001870DF /* CopyFiles */ = {
+		A933497C1C03D38A005812F5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -19,18 +27,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A9C073361BFDB133001870DF /* TCP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TCP; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9C073441BFDB3C2001870DF /* Header.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Header.cpp; path = ../../Header.cpp; sourceTree = "<group>"; };
-		A9C073451BFDB3C2001870DF /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../Header.h; sourceTree = "<group>"; };
-		A9C073461BFDB3C2001870DF /* Receiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Receiver.cpp; path = ../../Receiver.cpp; sourceTree = "<group>"; };
-		A9C073471BFDB9E5001870DF /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../../Makefile; sourceTree = "<group>"; };
-		A9C0734B1BFE4D4F001870DF /* Sender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sender.cpp; path = ../../Sender.cpp; sourceTree = "<group>"; };
-		A9C0734C1BFEEA33001870DF /* GobackN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GobackN.cpp; path = ../../GobackN.cpp; sourceTree = "<group>"; };
-		A9C0734D1BFEEA33001870DF /* GobackN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GobackN.h; path = ../../GobackN.h; sourceTree = "<group>"; };
+		A933497E1C03D38A005812F5 /* tcp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tcp; sourceTree = BUILT_PRODUCTS_DIR; };
+		A933499F1C03D533005812F5 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../../Makefile; sourceTree = "<group>"; };
+		A93349A11C03D577005812F5 /* GobackN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GobackN.cpp; path = ../../GobackN.cpp; sourceTree = "<group>"; };
+		A93349A21C03D577005812F5 /* GobackN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GobackN.h; path = ../../GobackN.h; sourceTree = "<group>"; };
+		A93349A31C03D577005812F5 /* Header.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Header.cpp; path = ../../Header.cpp; sourceTree = "<group>"; };
+		A93349A41C03D577005812F5 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../Header.h; sourceTree = "<group>"; };
+		A93349A51C03D577005812F5 /* Receiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Receiver.cpp; path = ../../Receiver.cpp; sourceTree = "<group>"; };
+		A93349A61C03D577005812F5 /* Sender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sender.cpp; path = ../../Sender.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A9C073331BFDB133001870DF /* Frameworks */ = {
+		A933497B1C03D38A005812F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,120 +48,125 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A9C0732D1BFDB133001870DF = {
+		A93349751C03D38A005812F5 = {
 			isa = PBXGroup;
 			children = (
-				A9C073381BFDB133001870DF /* TCP */,
-				A9C073371BFDB133001870DF /* Products */,
+				A93349801C03D38A005812F5 /* tcp */,
+				A933497F1C03D38A005812F5 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A9C073371BFDB133001870DF /* Products */ = {
+		A933497F1C03D38A005812F5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A9C073361BFDB133001870DF /* TCP */,
+				A933497E1C03D38A005812F5 /* tcp */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A9C073381BFDB133001870DF /* TCP */ = {
+		A93349801C03D38A005812F5 /* tcp */ = {
 			isa = PBXGroup;
 			children = (
-				A9C073471BFDB9E5001870DF /* Makefile */,
-				A9C073451BFDB3C2001870DF /* Header.h */,
-				A9C073441BFDB3C2001870DF /* Header.cpp */,
-				A9C0734D1BFEEA33001870DF /* GobackN.h */,
-				A9C0734C1BFEEA33001870DF /* GobackN.cpp */,
-				A9C073461BFDB3C2001870DF /* Receiver.cpp */,
-				A9C0734B1BFE4D4F001870DF /* Sender.cpp */,
+				A93349A11C03D577005812F5 /* GobackN.cpp */,
+				A93349A21C03D577005812F5 /* GobackN.h */,
+				A93349A31C03D577005812F5 /* Header.cpp */,
+				A93349A41C03D577005812F5 /* Header.h */,
+				A93349A51C03D577005812F5 /* Receiver.cpp */,
+				A93349A61C03D577005812F5 /* Sender.cpp */,
+				A933499F1C03D533005812F5 /* Makefile */,
 			);
-			path = TCP;
+			path = tcp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		A9C073401BFDB26A001870DF /* TCP make */ = {
+		A93349941C03D3F5005812F5 /* make */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = A9C073411BFDB26A001870DF /* Build configuration list for PBXLegacyTarget "TCP make" */;
+			buildConfigurationList = A93349951C03D3F5005812F5 /* Build configuration list for PBXLegacyTarget "make" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "/Users/baixiao/Desktop/Simple-TCP";
 			dependencies = (
 			);
-			name = "TCP make";
+			name = make;
 			passBuildSettingsInEnvironment = 1;
-			productName = "TCP make";
+			productName = make;
 		};
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		A9C073351BFDB133001870DF /* TCP */ = {
+		A933497D1C03D38A005812F5 /* tcp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A9C0733D1BFDB133001870DF /* Build configuration list for PBXNativeTarget "TCP" */;
+			buildConfigurationList = A93349851C03D38A005812F5 /* Build configuration list for PBXNativeTarget "tcp" */;
 			buildPhases = (
-				A9C073321BFDB133001870DF /* Sources */,
-				A9C073331BFDB133001870DF /* Frameworks */,
-				A9C073341BFDB133001870DF /* CopyFiles */,
+				A933497A1C03D38A005812F5 /* Sources */,
+				A933497B1C03D38A005812F5 /* Frameworks */,
+				A933497C1C03D38A005812F5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = TCP;
-			productName = TCP;
-			productReference = A9C073361BFDB133001870DF /* TCP */;
+			name = tcp;
+			productName = tcp;
+			productReference = A933497E1C03D38A005812F5 /* tcp */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A9C0732E1BFDB133001870DF /* Project object */ = {
+		A93349761C03D38A005812F5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Baixiao Huang";
 				TargetAttributes = {
-					A9C073351BFDB133001870DF = {
+					A933497D1C03D38A005812F5 = {
 						CreatedOnToolsVersion = 6.2;
 					};
-					A9C073401BFDB26A001870DF = {
+					A93349941C03D3F5005812F5 = {
 						CreatedOnToolsVersion = 6.2;
 					};
 				};
 			};
-			buildConfigurationList = A9C073311BFDB133001870DF /* Build configuration list for PBXProject "TCP" */;
+			buildConfigurationList = A93349791C03D38A005812F5 /* Build configuration list for PBXProject "tcp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = A9C0732D1BFDB133001870DF;
-			productRefGroup = A9C073371BFDB133001870DF /* Products */;
+			mainGroup = A93349751C03D38A005812F5;
+			productRefGroup = A933497F1C03D38A005812F5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A9C073351BFDB133001870DF /* TCP */,
-				A9C073401BFDB26A001870DF /* TCP make */,
+				A933497D1C03D38A005812F5 /* tcp */,
+				A93349941C03D3F5005812F5 /* make */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A9C073321BFDB133001870DF /* Sources */ = {
+		A933497A1C03D38A005812F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A93349A81C03D577005812F5 /* Header.cpp in Sources */,
+				A93349A01C03D533005812F5 /* Makefile in Sources */,
+				A93349AA1C03D577005812F5 /* Sender.cpp in Sources */,
+				A93349A91C03D577005812F5 /* Receiver.cpp in Sources */,
+				A93349A71C03D577005812F5 /* GobackN.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A9C0733B1BFDB133001870DF /* Debug */ = {
+		A93349831C03D38A005812F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -193,7 +206,7 @@
 			};
 			name = Debug;
 		};
-		A9C0733C1BFDB133001870DF /* Release */ = {
+		A93349841C03D38A005812F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -227,21 +240,21 @@
 			};
 			name = Release;
 		};
-		A9C0733E1BFDB133001870DF /* Debug */ = {
+		A93349861C03D38A005812F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		A9C0733F1BFDB133001870DF /* Release */ = {
+		A93349871C03D38A005812F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		A9C073421BFDB26A001870DF /* Debug */ = {
+		A93349961C03D3F5005812F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUGGING_SYMBOLS = YES;
@@ -257,7 +270,7 @@
 			};
 			name = Debug;
 		};
-		A9C073431BFDB26A001870DF /* Release */ = {
+		A93349971C03D3F5005812F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				OTHER_CFLAGS = "";
@@ -269,32 +282,32 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A9C073311BFDB133001870DF /* Build configuration list for PBXProject "TCP" */ = {
+		A93349791C03D38A005812F5 /* Build configuration list for PBXProject "tcp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A9C0733B1BFDB133001870DF /* Debug */,
-				A9C0733C1BFDB133001870DF /* Release */,
+				A93349831C03D38A005812F5 /* Debug */,
+				A93349841C03D38A005812F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A9C0733D1BFDB133001870DF /* Build configuration list for PBXNativeTarget "TCP" */ = {
+		A93349851C03D38A005812F5 /* Build configuration list for PBXNativeTarget "tcp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A9C0733E1BFDB133001870DF /* Debug */,
-				A9C0733F1BFDB133001870DF /* Release */,
+				A93349861C03D38A005812F5 /* Debug */,
+				A93349871C03D38A005812F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
-		A9C073411BFDB26A001870DF /* Build configuration list for PBXLegacyTarget "TCP make" */ = {
+		A93349951C03D3F5005812F5 /* Build configuration list for PBXLegacyTarget "make" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A9C073421BFDB26A001870DF /* Debug */,
-				A9C073431BFDB26A001870DF /* Release */,
+				A93349961C03D3F5005812F5 /* Debug */,
+				A93349971C03D3F5005812F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A9C0732E1BFDB133001870DF /* Project object */;
+	rootObject = A93349761C03D38A005812F5 /* Project object */;
 }

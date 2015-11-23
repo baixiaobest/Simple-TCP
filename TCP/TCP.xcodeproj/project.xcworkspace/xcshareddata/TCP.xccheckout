@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>542BD4DA-8664-4D9F-A8B1-2E6F74421F6B</string>
+	<string>02D6D0AF-C1B7-4B67-BC12-BB634749D7C7</string>
 	<key>IDESourceControlProjectName</key>
-	<string>TCP</string>
+	<string>tcp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>DE1ABC05DC9BF8909A6DC069282DEDCE4078D059</key>
 		<string>https://github.com/baixiaobest/Simple-TCP.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TCP/TCP.xcodeproj</string>
+	<string>tcp/tcp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>DE1ABC05DC9BF8909A6DC069282DEDCE4078D059</key>
