@@ -10,34 +10,13 @@
 
 
 void constructHeader(char* buffer, header_t header){
-	//fill up checkSum field
-	buffer[0] = (char) (header.checkSum_m >> 8) & 0xFF;
-	buffer[1] = (char) header.checkSum_m & 0xFF;
-	//fill up sequence number field
-	buffer[2] = (char) ((header.sequenceNumber_m >> 24) & 0xFF);
-	buffer[3] = (char) ((header.sequenceNumber_m >> 16) & 0xFF);
-	buffer[4]= (char) ((header.sequenceNumber_m >> 8)  & 0xFF);
-	buffer[5]= (char) ( header.sequenceNumber_m        & 0xFF);
-	//fill up ACK number field
-	buffer[6] = (char) (header.ACKNumber_m >> 24 & 0xFF);
-	buffer[7] = (char) (header.ACKNumber_m >> 16 & 0xFF);
-	buffer[8] = (char) (header.ACKNumber_m >> 8  & 0xFF);
-	buffer[9] = (char) (header.ACKNumber_m       & 0xFF);
-	//fill up dataLength field
-	buffer[10] = (char) (header.dataLength_m >> 8 & 0xFF);
-	buffer[11] = (char) (header.dataLength_m      & 0xFF);
-	//fill up command field
-	buffer[12] = (char) (header.command_m >> 8) & 0xFF;
-	buffer[13] = (char) (header.command_m       & 0xFF);
-	return;
+    memcpy(buffer, &header, HEADERSIZE);
+    return;
 }
 
 void extractHeader(char* buffer, header_t* header){
-    header->checkSum_m = ( ((uint16_t)buffer[0]) << 8 ) | ( (uint16_t) buffer[1] );
-    header->sequenceNumber_m = (( (uint32_t) buffer[2] ) << 24) | ( ((uint32_t) buffer[3]) << 16 ) | (((uint32_t) buffer[4]) << 8) | ((uint32_t) buffer[5]);
-    header->ACKNumber_m = (( (uint32_t) buffer[6] ) << 24) | ( ((uint32_t) buffer[7]) << 16 ) | (((uint32_t) buffer[8]) << 8) | ((uint32_t) buffer[9]);
-    header->dataLength_m = ( ((uint16_t)buffer[10]) << 8 ) | ( (uint16_t) buffer[11] );
-    header->command_m = ( ((uint16_t)buffer[12]) << 8 ) | ( (uint16_t) buffer[13] );
+    memcpy(header, buffer, HEADERSIZE);
+    return;
 }
 
 void appendData(char* buffer, char* data, unsigned int dataLength){
@@ -66,4 +45,8 @@ uint16_t calculateChecksum(char*buffer){
     //one's complement
     checksum = ~checksum;
     return (uint16_t) (checksum & 0x0000FFFF);
+}
+
+char* extractData(char* buffer){
+    return buffer + HEADERSIZE;
 }

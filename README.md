@@ -22,6 +22,7 @@ There are 4 command types:
 * 2: Packet is ACK packet
 * 3: First data packet
 * 4: Last data packet
+* 5: ACK for the last packet
 
 In case of ACK packet, data field contains no packet, data length is thus zero.
 Sender will put command 3 into first packet sent out and command 4 into last packet sent out, so that receiver knows where to start and where to end.
