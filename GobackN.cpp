@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <arpa/inet.h>
+#include <stdint.h>
 
 using namespace std;
 
@@ -196,7 +197,7 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
             newEnd =(header.ACKNumber_m - gobackn -> seqstart_m) + gobackn-> seqend_m;
             cout << "new end is " << newEnd << endl;
         
-            if(sendData(gobackn -> seqend_m, newEnd, gobackn,false, receiverAddr, addrlen, lastPacketSent) == -1){
+            if(sendData(gobackn -> seqend_m, newEnd, gobackn, false, receiverAddr, addrlen, lastPacketSent) == -1){
                 cout << "Error: fail to send the data" << endl;
                 return -1;
             }
@@ -209,12 +210,18 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
 }
 
 int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen, bool& lastPacketSent){
-    //the position of file should always be at the end position of gobackn window (seqend_m)
-    //after the initial call
+    //the position of file should always be at the end position of
+    //gobackn window (seqend_m) after the initial call
     //so we can set the offset with this knowledge
     if(!initial){
+        //offset should only be non-zero when we resend the data in the window
+        //when we resend the data in the window, offset should be smaller than 0
         uint32_t offset = begin - gobackn -> seqend_m;
-        fseek ( gobackn -> fd_m , offset, SEEK_CUR);
+        //when offset is greater than 0, it means an overflow occurs for uint32_t end
+        if(offset > 0){
+            offset = -end - (UINT32_MAX - begin) - 1;
+        }
+        fseek (gobackn -> fd_m , offset, SEEK_CUR);
     }
     while (begin < end) {
         header_t header;
