@@ -133,11 +133,11 @@ int listenForRequest(gobackn_t* gobackn, sockaddr_in& receiverAddr, socklen_t& a
         receiverIP = inet_ntoa(receiverAddr.sin_addr);
         receiverPort = ntohs(receiverAddr.sin_port);
         
-        cout << "Info: request for file transfer received" << endl;
-        cout << "Receiver IP: " << receiverIP << "Receiver Port: " << receiverPort << endl;
         extractHeader(buffer, &header);
         uint16_t checksum = calculateChecksum(buffer);
         if(header.command_m == (uint16_t) REQUEST){
+            cout << "Info: request for file transfer received" << endl;
+            cout << "Receiver IP: " << receiverIP << "Receiver Port: " << receiverPort << endl;
             cout << "Checksum is: " << checksum << endl;
             cout << "Requesting file: " << buffer + HEADERSIZE << endl;
             
@@ -205,7 +205,6 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         gobackn -> seqend_m = newEnd;
     }
     fclose(gobackn -> fd_m);
-    close(gobackn -> socket_m);
     return 0;
 }
 

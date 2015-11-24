@@ -53,11 +53,20 @@ int main(int argc, char* argv[]){
     gobackn.seqend_m = 0 + windowSize * MAX_DATA_SIZE;
     sockaddr_in receiverAddr;
     socklen_t addrlen;
-    if(listenForRequest(&gobackn, receiverAddr, addrlen) == -1){
-        cout << "Error: File not found, an empty file will be sent" << endl;
-    }
+    while (true) {
+        cout << "Info: Waiting for request" << endl;
+        if(listenForRequest(&gobackn, receiverAddr, addrlen) == -1){
+            cout << "Error: File not found, an empty file will be sent" << endl;
+        }
     
-    sendRequestedFile(&gobackn, receiverAddr, addrlen);
+        sendRequestedFile(&gobackn, receiverAddr, addrlen);
+        
+       
+        //reset gobackn for next request
+        gobackn.fd_m = NULL;
+        gobackn.seqstart_m = 0;
+        gobackn.seqend_m = 0 + windowSize * MAX_DATA_SIZE;
+    }
     
     return 0;
 }
