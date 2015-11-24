@@ -10,10 +10,16 @@
 #include "Header.h"
 #include "GobackN.h"
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
+gobackn_t gobackn;
+void sighandler(int);
+
 int main(int argc, char* argv[]){
+    signal(SIGINT, sighandler);
+
     int socketfd, senderPort;
     struct sockaddr_in senderAddress;
     struct hostent* sender;
@@ -62,10 +68,18 @@ int main(int argc, char* argv[]){
     if(connect(socketfd, (struct sockaddr *) &senderAddress, sizeof(senderAddress)) < 0){
         cout << "connection fails" << endl;
     }
-    gobackn_t gobackn;
     gobackn.socket_m = socketfd;
     gobackn.seqend_m = 0;
     requestFile(&gobackn, fileName);
     
 	return 0;
+}
+
+void sighandler(int signum) {
+    if(signum == SIGINT){
+        cout << "Interuption detected, clean up the program" << endl;
+        fclose(gobackn.fd_m);
+        close(gobackn.socket_m);
+        _exit(1);
+    }
 }

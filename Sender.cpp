@@ -23,7 +23,12 @@
 
 using namespace std;
 
+gobackn_t gobackn;
+void sighandler(int);
+
 int main(int argc, char* argv[]){
+    signal(SIGINT, sighandler);
+    
     int socketfd, portNumber, windowSize;
     struct sockaddr_in myAddress;
 
@@ -47,7 +52,6 @@ int main(int argc, char* argv[]){
         return 1;
     }
     
-    gobackn_t gobackn;
     gobackn.socket_m = socketfd;
     gobackn.seqstart_m = 0;
     gobackn.seqend_m = 0 + windowSize * MAX_DATA_SIZE;
@@ -69,4 +73,13 @@ int main(int argc, char* argv[]){
     }
     
     return 0;
+}
+
+void sighandler(int signum) {
+    if(signum == SIGINT){
+        cout << "Interuption detected, clean up the program" << endl;
+        fclose(gobackn.fd_m);
+        close(gobackn.socket_m);
+        _exit(1);
+    }
 }
