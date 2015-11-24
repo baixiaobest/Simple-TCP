@@ -141,8 +141,10 @@ int listenForRequest(gobackn_t* gobackn, sockaddr_in& receiverAddr, socklen_t& a
             cout << "Requesting file: " << buffer + HEADERSIZE << endl;
             
             gobackn -> fd_m = fopen(extractData(buffer),"r");
-            if(gobackn -> fd_m == NULL)
+            if(gobackn -> fd_m == NULL){
+                gobackn -> fd_m = tmpfile();
                 return -1;
+            }
             else
                 return 0;
         }

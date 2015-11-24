@@ -54,9 +54,7 @@ int main(int argc, char* argv[]){
     sockaddr_in receiverAddr;
     socklen_t addrlen;
     if(listenForRequest(&gobackn, receiverAddr, addrlen) == -1){
-        cout << "Error: File not found" << endl;
-        close(gobackn.socket_m);
-        return 1;
+        cout << "Error: File not found, an empty file will be sent" << endl;
     }
     
     sendRequestedFile(&gobackn, receiverAddr, addrlen);
