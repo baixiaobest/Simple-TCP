@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-#define HEADERSIZE 14 //14 bytes header size in the packet
+#define HEADERSIZE sizeof(header_t)
 
-enum COMMAND{DATA, REQUEST, ACK, FIRST_PACKET, LAST_PACKET};
+enum COMMAND{DATA, REQUEST, ACK, FIRST_PACKET, LAST_PACKET, LAST_ACK};
 
 typedef struct{
 	uint16_t checkSum_m;
@@ -32,7 +32,6 @@ void extractHeader(char* buffer, header_t* header);
 buffer: buffer to put data
 data: data to append to buffer
 dataLength: length of data to append to buffer
-This function will also change the dataLenth field of buffer.
 **/
 void appendData(char* buffer, char* data, unsigned int dataLength);
 
@@ -41,5 +40,10 @@ void appendData(char* buffer, char* data, unsigned int dataLength);
 buffer: buffer to calculate checksum
 **/
 uint16_t calculateChecksum(char*buffer);
+
+/**
+ buffer: buffer contains data and header
+ **/
+char* extractData(char* buffer);
 
 #endif
