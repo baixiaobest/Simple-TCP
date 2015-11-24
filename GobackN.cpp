@@ -25,9 +25,10 @@ using namespace std;
  @ end: end position of the content to be sent (exclusive)
  @ gobackn: struct to keep info about window size and sequence number. You need specify file descriptor and sender socket. seqstart_m of gobackn is defined by sender.
  @initial: indicate whether it is the first time that this function is called
+ @lastPacketSent: lastPacketSent will be set to be true after the last packet has been sent
  return 0 when succeed, return -1 when an error occurs.
  */
-int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen);
+int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen, bool& lastPacketSent);
 
 int requestFile(gobackn_t* gobackn, char* fileName){
     //initialize request file header.
@@ -157,9 +158,10 @@ int listenForRequest(gobackn_t* gobackn, sockaddr_in& receiverAddr, socklen_t& a
 int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t addrlen){
     header_t header;
     char dataBuffer[MAX_PACKET_SIZE];
+    bool lastPacketSent = false;
 
     //send all of the content in the window
-    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, true, receiverAddr, addrlen) == -1){
+    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, true, receiverAddr, addrlen, lastPacketSent) == -1){
         cout << "Error: fail to send the data" << endl;
         return -1;
     }
@@ -184,13 +186,20 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         //ignore ACK which is out of the bound
         if(header.ACKNumber_m < gobackn -> seqstart_m || header.ACKNumber_m >= gobackn->seqend_m)
             continue;
-        uint32_t newBegin = header.ACKNumber_m;
-        uint32_t newEnd =(header.ACKNumber_m - gobackn -> seqstart_m) + gobackn-> seqend_m;
-        cout << "new end is " << newEnd << endl;
         
-        if(sendData(gobackn -> seqend_m, newEnd, gobackn,false, receiverAddr, addrlen) == -1){
-            cout << "Error: fail to send the data" << endl;
-            return -1;
+        uint32_t newBegin = header.ACKNumber_m;
+        uint32_t newEnd = gobackn-> seqend_m;
+        //after the last packet has been sent, we don't have to send more packets.
+        //we only need to update the (start of) window
+        if(!lastPacketSent){
+            newBegin = header.ACKNumber_m;
+            newEnd =(header.ACKNumber_m - gobackn -> seqstart_m) + gobackn-> seqend_m;
+            cout << "new end is " << newEnd << endl;
+        
+            if(sendData(gobackn -> seqend_m, newEnd, gobackn,false, receiverAddr, addrlen, lastPacketSent) == -1){
+                cout << "Error: fail to send the data" << endl;
+                return -1;
+            }
         }
         gobackn -> seqstart_m = newBegin;
         gobackn -> seqend_m = newEnd;
@@ -200,7 +209,7 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
     return 0;
 }
 
-int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen){
+int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen, bool& lastPacketSent){
     //the position of file should always be at the end position of gobackn window (seqend_m)
     //after the initial call
     //so we can set the offset with this knowledge
@@ -226,6 +235,7 @@ int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sock
                 cout << "Info: Last packet to be read" << endl;
                 header.dataLength_m = sizeReaded;
                 header.command_m = (uint16_t) LAST_PACKET;
+                lastPacketSent = true;
             }
         }
         else{
