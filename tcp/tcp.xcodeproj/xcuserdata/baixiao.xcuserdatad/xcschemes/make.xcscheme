@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9C073401BFDB26A001870DF"
-               BuildableName = "TCP make"
-               BlueprintName = "TCP make"
-               ReferencedContainer = "container:TCP.xcodeproj">
+               BlueprintIdentifier = "A93349941C03D3F5005812F5"
+               BuildableName = "make"
+               BlueprintName = "make"
+               ReferencedContainer = "container:tcp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9C073351BFDB133001870DF"
-            BuildableName = "TCP"
-            BlueprintName = "TCP"
-            ReferencedContainer = "container:TCP.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -51,29 +42,29 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/baixiao/Desktop/Simple-TCP/sender">
+         FilePath = "/Users/baixiao/Desktop/Simple-TCP/receiver">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9C073401BFDB26A001870DF"
-            BuildableName = "TCP make"
-            BlueprintName = "TCP make"
-            ReferencedContainer = "container:TCP.xcodeproj">
+            BlueprintIdentifier = "A93349941C03D3F5005812F5"
+            BuildableName = "make"
+            BlueprintName = "make"
+            ReferencedContainer = "container:tcp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
             argument = "192.168.0.8"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "9999"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "test.html"
-            isEnabled = "NO">
+            argument = "test"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
@@ -88,10 +79,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9C073401BFDB26A001870DF"
-            BuildableName = "TCP make"
-            BlueprintName = "TCP make"
-            ReferencedContainer = "container:TCP.xcodeproj">
+            BlueprintIdentifier = "A93349941C03D3F5005812F5"
+            BuildableName = "make"
+            BlueprintName = "make"
+            ReferencedContainer = "container:tcp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

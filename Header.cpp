@@ -38,14 +38,14 @@ uint16_t calculateChecksum(char*buffer){
     uint32_t checksum = 0;
     int iteration = (HEADERSIZE+dataLength)/2;
     for (int i=0; i<iteration; i++) {
-        uint16_t hi = ((uint16_t) buffer[i*2] ) << 8;
+        uint16_t hi = ((uint16_t) buffer[i*2] & 0xFF) << 8;
         uint16_t lo = ((uint16_t)buffer[i*2+1]) & 0xFF;
         checksum = checksum + (uint32_t)( hi | lo);
         checksum = (checksum & 0x0000FFFF) + ((checksum & 0xFFFF0000) >> 16);
     }
     //pad with zeros
     if ((HEADERSIZE+dataLength)%2 == 1) {
-        checksum = checksum + (uint32_t)(((uint16_t)buffer[iteration*2]) << 8);
+        checksum = checksum + (uint32_t)(((uint16_t)buffer[iteration*2] & 0xFF) << 8) & 0x0000FFFF;
         checksum = (checksum & 0x0000FFFF) + ((checksum & 0xFFFF0000) >> 16);
     }
     //one's complement

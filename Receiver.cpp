@@ -71,7 +71,7 @@ int main(int argc, char* argv[]){
     gobackn.socket_m = socketfd;
     gobackn.seqend_m = 0;
     requestFile(&gobackn, fileName);
-    
+
 	return 0;
 }
 

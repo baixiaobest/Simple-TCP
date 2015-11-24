@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>TCP make.xcscheme</key>
+		<key>make.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>TCP.xcscheme</key>
+		<key>tcp.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -17,12 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A9C073351BFDB133001870DF</key>
+		<key>A933497D1C03D38A005812F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A9C073401BFDB26A001870DF</key>
+		<key>A93349941C03D3F5005812F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

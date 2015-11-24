@@ -13,6 +13,7 @@
 #include <time.h>
 #include "Header.h"
 
+
 #define MAX_PACKET_SIZE 1024  //size in bytes for the whole packet
 #define MAX_DATA_SIZE (MAX_PACKET_SIZE - HEADERSIZE)    //size in bytes for the data part
 
@@ -42,13 +43,17 @@ int requestFile(gobackn_t* gobackn, char* fileName);
 /*
 This function listen for connection, when a request for file is received, function open up file descriptor for file and returns. This is a blocking function.
 @ gobackn: It keeps info about connection and window size. seqstart_m and seqend_m should be specified before calling this function
+@ receiverAddr receiver's address
+@ addrlen address length
 @ return: -1 when requested file not found. >=0 on success
 */
+
 int listenForRequest(gobackn_t* gobackn, sockaddr_in& receiverAddr, socklen_t& addrlen);
 
 /*
 This function sends requested file to receiver.
 */
+
 int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t addrlen);
 
 #endif

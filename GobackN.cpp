@@ -9,6 +9,8 @@
 #include <sys/socket.h>  // definitions of structures needed for sockets, e.g. sockaddr
 #include <netinet/in.h>  // constants and structures needed for internet domain addresses, e.g. sockaddr_in
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "GobackN.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -42,6 +44,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
     header.command_m = (uint16_t) REQUEST;
     char buffer[strlen(fileName)+HEADERSIZE];
     
+    //append data to header, calculate checksum, then send it out
     constructHeader(buffer, header);
     appendData(buffer, fileName, dataLength);
     uint16_t checkSum = calculateChecksum(buffer);
