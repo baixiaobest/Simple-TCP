@@ -10,35 +10,13 @@
 
 
 void constructHeader(char* buffer, header_t header){
-	//fill up checkSum field
-	buffer[0] = (char) (header.checkSum_m >> 8) & 0xFF;
-	buffer[1] = (char) header.checkSum_m & 0xFF;
-	//fill up sequence number field
-	buffer[2] = (char) ((header.sequenceNumber_m >> 24) & 0xFF);
-	buffer[3] = (char) ((header.sequenceNumber_m >> 16) & 0xFF);
-	buffer[4]= (char) ((header.sequenceNumber_m >> 8)  & 0xFF);
-	buffer[5]= (char) ( header.sequenceNumber_m        & 0xFF);
-	//fill up ACK number field
-	buffer[6] = (char) (header.ACKNumber_m >> 24 & 0xFF);
-	buffer[7] = (char) (header.ACKNumber_m >> 16 & 0xFF);
-	buffer[8] = (char) (header.ACKNumber_m >> 8  & 0xFF);
-	buffer[9] = (char) (header.ACKNumber_m       & 0xFF);
-	//fill up dataLength field
-	buffer[10] = (char) (header.dataLength_m >> 8 & 0xFF);
-	buffer[11] = (char) (header.dataLength_m      & 0xFF);
-	//fill up command field
-	buffer[12] = (char) (header.command_m >> 8) & 0xFF;
-	buffer[13] = (char) (header.command_m       & 0xFF);
-	return;
+    memcpy(buffer, &header, HEADERSIZE);
+    return;
 }
 
 void extractHeader(char* buffer, header_t* header){
-    header->checkSum_m = ( (uint16_t) (buffer[0] & 0xFF)  << 8 ) | ( (uint16_t) (buffer[1] & 0xFF) );
-    header->sequenceNumber_m = (( (uint32_t) buffer[2] & 0xFF ) << 24) | ( ((uint32_t) buffer[3]& 0xFF) << 16 ) | (((uint32_t) buffer[4] & 0xFF) << 8) | ((uint32_t) buffer[5] & 0xFF);
-    
-    header->ACKNumber_m = (( (uint32_t) buffer[6] & 0xFF ) << 24) | ( ((uint32_t) buffer[7] & 0xFF) << 16 ) | (((uint32_t) buffer[8] & 0xFF) << 8) | ((uint32_t) buffer[9] & 0xFF);
-    header->dataLength_m = ( ((uint16_t)buffer[10] & 0xFF) << 8 ) | ( (uint16_t) buffer[11] & 0xFF );
-    header->command_m = ( ((uint16_t)buffer[12] & 0xFF) << 8 ) | ( (uint16_t) buffer[13] & 0xFF );
+    memcpy(header, buffer, HEADERSIZE);
+    return;
 }
 
 void appendData(char* buffer, char* data, unsigned int dataLength){
@@ -50,7 +28,13 @@ void appendData(char* buffer, char* data, unsigned int dataLength){
 }
 
 uint16_t calculateChecksum(char*buffer){
-    uint16_t dataLength = ((uint16_t)buffer[10] & 0xFF) << 8 | ((uint16_t)buffer[11] & 0xFF);
+    header_t header;
+    memcpy(&header, buffer, HEADERSIZE);
+    int originalCheckSum = header.checksum;
+    header.checksum = 0;
+    memcpy(buffer, header, HEADERSIZE);
+
+    uint16_t dataLength = ((uint16_t)buffer[10]) << 8 | ((uint16_t)buffer[11] & 0xFF);
     uint32_t checksum = 0;
     int iteration = (HEADERSIZE+dataLength)/2;
     for (int i=0; i<iteration; i++) {
@@ -66,5 +50,11 @@ uint16_t calculateChecksum(char*buffer){
     }
     //one's complement
     checksum = ~checksum;
+    header.checksum = originalCheckSum;
+    memcpy(buffer, header, HEADERSIZE);
     return (uint16_t) (checksum & 0x0000FFFF);
+}
+
+char* extractData(char* buffer){
+    return buffer + HEADERSIZE;
 }

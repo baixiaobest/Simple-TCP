@@ -13,19 +13,19 @@
 #include <time.h>
 #include "Header.h"
 
-#define WINDOWSIZE 10         //size in number of packets
-#define MAX_PACKET_SIZE 1024  //size in bytes
-#define MAX_FILENAME_SIZE 100
-#define TIMER_EXPIRE 100
+
+#define MAX_PACKET_SIZE 1024  //size in bytes for the whole packet
+#define MAX_DATA_SIZE (MAX_PACKET_SIZE - HEADERSIZE)    //size in bytes for the data part
 
 typedef struct{
      /*requested file descriptor. For receiver, it is the file on disk to save to.
       For sender, it is the file to send to socket_m*/
-    int fd_m;
+    FILE* fd_m;
     //For receiver, this is socket to sender. For sender, this is socket from reciever
     int socket_m;
-    //first sequence number in the window
+    //first sequence number in the window (inclusive)
     uint32_t seqstart_m;
+    //last sequence number in the window (exclusive)
     uint32_t seqend_m;
     //a timer that is refreshed when new ACK is received. This is for sender
     clock_t timer_m;
@@ -47,11 +47,13 @@ This function listen for connection, when a request for file is received, functi
 @ addrlen address length
 @ return: -1 when requested file not found. >=0 on success
 */
-int listenForRequest(gobackn_t* gobackn, sockaddr_in* receiverAddr, socklen_t* addrlen);
+
+int listenForRequest(gobackn_t* gobackn, sockaddr_in& receiverAddr, socklen_t& addrlen);
 
 /*
 This function sends requested file to receiver.
 */
-int sendRequestedFile(gobackn_t* gobackn, sockaddr_in* receiverAddr);
+
+int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t addrlen);
 
 #endif
