@@ -29,7 +29,7 @@ Sender will put command 3 into first packet sent out and command 4 into last pac
 Receiver acknowlege received last in order packet sequence number.
 
 ### Maximum data field size
-The maximum size of packet is 1 Kb, the header size is 16 bytes, thus the maximum size of data a packet can carry over UDP is 1008 bytes.
+The maximum size of packet is 1 Kb, the header size is 14 bytes, thus the maximum size of data a packet can carry over UDP is 1010 bytes.
 
 
 ## Checksum Calculation
