@@ -33,8 +33,8 @@ uint16_t calculateChecksum(char*buffer){
     int originalCheckSum = header.checkSum_m;
     header.checkSum_m = 0;
     memcpy(buffer, &header, HEADERSIZE);
-
-    uint16_t dataLength = ((uint16_t)buffer[10]) << 8 | ((uint16_t)buffer[11] & 0xFF);
+    
+    uint16_t dataLength = header.dataLength_m;
     uint32_t checksum = 0;
     int iteration = (HEADERSIZE+dataLength)/2;
     for (int i=0; i<iteration; i++) {
