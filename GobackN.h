@@ -29,6 +29,8 @@ typedef struct{
     uint32_t seqend_m;
     //a timer that is refreshed when new ACK is received. This is for sender
     clock_t timer_m;
+    int dataLossProb;
+    int dataCorruptProb;
 } gobackn_t;
 
 /*
@@ -55,5 +57,17 @@ This function sends requested file to receiver.
 */
 
 int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t addrlen);
+
+
+ssize_t Send(gobackn_t* gobackn, void *buf, size_t len, int flags);
+
+ssize_t SendTo(gobackn_t* gobackn, void *buff, size_t len, int flags, const struct sockaddr *dest_addr, socklen_t addrlen);
+
+/*
+This function will modify the checksum field of buff and return 1 if data is corrupted.
+ It returns -1 if data is lost. Return 0 if nothing happens.
+ */
+int dataLossCorruptionSim(void *buff, int lossProb, int corruptProb);
+
 
 #endif

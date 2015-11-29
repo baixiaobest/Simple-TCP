@@ -17,6 +17,7 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <stdint.h>
+#include <time.h>
 
 using namespace std;
 
@@ -51,7 +52,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
     header.checkSum_m = checkSum;
     constructHeader(buffer, header);
     cout << "Request for file " << fileName << endl;
-    send(gobackn->socket_m, buffer, (size_t) (strlen(fileName)+HEADERSIZE+1), 0);
+    Send(gobackn, buffer, (size_t) (strlen(fileName)+HEADERSIZE+1), 0);
     
     //create a new file to save data into it
     gobackn -> fd_m = fopen(fileName, "w");
@@ -109,7 +110,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         }
         constructHeader(dataBuffer, ackHeader);
         cout << "Info: Receiver sends an ACK with ACK number: " << ackHeader.ACKNumber_m << endl;
-        send(gobackn->socket_m, dataBuffer, HEADERSIZE, 0);
+        Send(gobackn, dataBuffer, HEADERSIZE, 0);
         
         //if the packet processed was the last packet, break out of the loop
         if(header.command_m == (uint16_t) LAST_PACKET){
@@ -258,7 +259,7 @@ int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sock
         constructHeader(buffer, header);
         
         cout << "Info: Sender sends packet with sequence number :" << header.sequenceNumber_m << " data length: " << header.dataLength_m << endl;
-        if(sendto(gobackn->socket_m, buffer, HEADERSIZE + header.dataLength_m, 0, (struct sockaddr *) &receiverAddr, addrlen) < 0){
+        if(SendTo(gobackn, buffer, HEADERSIZE + header.dataLength_m, 0, (struct sockaddr *) &receiverAddr, addrlen) < 0){
             cout << "Error: fail to send data" << endl;
             return -1;
         }
@@ -268,3 +269,36 @@ int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sock
     }
     return 0;
 }
+
+
+
+ssize_t Send(gobackn_t* gobackn, void *buff, size_t len, int flags){
+    if (dataLossCorruptionSim(buff, gobackn->dataLossProb, gobackn->dataCorruptProb) == -1) {
+        return 0;
+    }
+    return send(gobackn->socket_m, buff, len, flags);
+}
+
+ssize_t SendTo(gobackn_t* gobackn, void *buff, size_t len, int flags, const struct sockaddr *dest_addr, socklen_t addrlen){
+    if (dataLossCorruptionSim(buff, gobackn->dataLossProb, gobackn->dataCorruptProb) == -1) {
+        return 0;
+    }
+    return sendto(gobackn->socket_m, buff, len, flags, dest_addr, addrlen);
+}
+
+
+int dataLossCorruptionSim(void *buff, int lossProb, int corruptProb){
+    srand(time(NULL));
+    int loss = rand() % 99;
+    if (loss <lossProb) {
+        return -1;
+    }
+    int corrupt = rand() % 99;
+    if (corrupt < corruptProb) {
+        ((char*) buff)[0] = ((char*)buff)[0] ^ 0xFF;
+        ((char*) buff)[1] = ((char*)buff)[1] ^ 0xFF;
+        return 1;
+    }
+    return 0;
+}
+
