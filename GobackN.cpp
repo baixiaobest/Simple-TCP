@@ -45,7 +45,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
     header.checkSum_m = checkSum;
     constructHeader(buffer, header);
     cout << "Request for file " << fileName << endl;
-    Send(gobackn, buffer, (size_t) (strlen(fileName)+HEADERSIZE+1), 0);
+    send(gobackn->socket_m, buffer, (size_t) (strlen(fileName)+HEADERSIZE+1), 0);
     
     //create a new file to save data into it
     gobackn -> fd_m = fopen(fileName, "w");
