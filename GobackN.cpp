@@ -22,6 +22,8 @@
 
 #define UINT32_MAX 0xFFFFFFFF
 
+extern gobackn_t gobackn_g;
+
 using namespace std;
 
 int requestFile(gobackn_t* gobackn, char* fileName){
@@ -297,7 +299,7 @@ ssize_t SendTo(gobackn_t* gobackn, void *buff, size_t len, int flags, const stru
     if (dataLossCorruptionSim(buff, gobackn->dataLossProb, gobackn->dataCorruptProb) == -1) {
         return 0;
     }
-    return sendto(gobackn->socket_m, buff, len, flags, dest_addr, addrlen);
+    return sendto(gobackn->socket_m, buff, len, flags, (struct sockaddr*) &gobackn_g.receiverAddr, gobackn_g.addrlen);
 }
 
 
