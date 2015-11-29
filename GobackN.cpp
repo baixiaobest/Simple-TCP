@@ -19,20 +19,9 @@
 #include <stdint.h>
 #include <time.h>
 
-using namespace std;
+#define UINT32_MAX 0xFFFFFFFF
 
-/*
- This function send the content of the file indicated by begin and end to the socket indicated in gobackn_t.
- It will truncate the data into packets.
- The file pointer will stop at the end position.
- @ begin: begin position of the content to be sent (inclusive)
- @ end: end position of the content to be sent (exclusive)
- @ gobackn: struct to keep info about window size and sequence number. You need specify file descriptor and sender socket. seqstart_m of gobackn is defined by sender.
- @initial: indicate whether it is the first time that this function is called
- @lastPacketSent: lastPacketSent will be set to be true after the last packet has been sent
- return 0 when succeed, return -1 when an error occurs.
- */
-int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen, bool& lastPacketSent);
+using namespace std;
 
 int requestFile(gobackn_t* gobackn, char* fileName){
     //initialize request file header.

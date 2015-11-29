@@ -20,6 +20,7 @@
 #include "Header.h"
 #include "GobackN.h"
 #include <iostream>
+#include <signal.h>
 
 using namespace std;
 
@@ -99,7 +100,7 @@ void timeout_handler(int signum) {
     if(signum == SIGALRM){
         //dummy value
         bool lastPacketSent;
-        sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn->initial, myAddress, addrlen, lastPacketSent);
-        cout << "INFO: Timeout! Sender resends data from " << gobackn->seqstart_m << " to " << gobackn->seqend_m <<endl;
+        sendData(gobackn.seqstart_m, gobackn.seqend_m, &gobackn, gobackn->initial, myAddress, addrlen, lastPacketSent);
+        cout << "INFO: Timeout! Sender resends data from " << gobackn.seqstart_m << " to " << gobackn.seqend_m <<endl;
     }
 }
