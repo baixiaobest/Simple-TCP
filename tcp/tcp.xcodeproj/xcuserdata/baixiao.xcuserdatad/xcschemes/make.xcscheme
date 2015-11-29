@@ -17,7 +17,7 @@
                BlueprintIdentifier = "A93349941C03D3F5005812F5"
                BuildableName = "make"
                BlueprintName = "make"
-               ReferencedContainer = "container:tcp.xcodeproj">
+               ReferencedContainer = "container:TCP.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,7 +42,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/baixiao/Desktop/Simple-TCP/receiver">
+         FilePath = "/Users/baixiao/Desktop/Simple-TCP/sender">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -50,20 +50,32 @@
             BlueprintIdentifier = "A93349941C03D3F5005812F5"
             BuildableName = "make"
             BlueprintName = "make"
-            ReferencedContainer = "container:tcp.xcodeproj">
+            ReferencedContainer = "container:TCP.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "192.168.0.8"
-            isEnabled = "YES">
+            argument = "localhost"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "9999"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "test"
+            argument = "5"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "testfiles/test.png"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "0"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "0"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -82,7 +94,7 @@
             BlueprintIdentifier = "A93349941C03D3F5005812F5"
             BuildableName = "make"
             BlueprintName = "make"
-            ReferencedContainer = "container:tcp.xcodeproj">
+            ReferencedContainer = "container:TCP.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
