@@ -176,8 +176,6 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
     }
 
     while (true) {
-        struct sockaddr_in receiverAddr;
-        socklen_t addrlen;
         if(recvfrom(gobackn->socket_m, dataBuffer, MAX_PACKET_SIZE, 0, NULL, NULL) == -1){
             cout << "Error: when receiving ACK from receiver, recfrom return -1" << endl;
             close(gobackn->socket_m);
@@ -299,7 +297,7 @@ ssize_t SendTo(gobackn_t* gobackn, void *buff, size_t len, int flags, const stru
     if (dataLossCorruptionSim(buff, gobackn->dataLossProb, gobackn->dataCorruptProb) == -1) {
         return 0;
     }
-    return sendto(gobackn->socket_m, buff, len, flags, (struct sockaddr*) &gobackn_g.receiverAddr, gobackn_g.addrlen);
+    return sendto(gobackn->socket_m, buff, len, flags, dest_addr, addrlen);
 }
 
 
