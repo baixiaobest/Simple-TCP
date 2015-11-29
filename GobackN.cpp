@@ -27,6 +27,7 @@ extern gobackn_t gobackn_g;
 using namespace std;
 
 int requestFile(gobackn_t* gobackn, char* fileName){
+    srand(time(NULL));
     //initialize request file header.
     header_t header;
     header.checkSum_m = 0;
@@ -161,6 +162,7 @@ int listenForRequest(gobackn_t* gobackn, sockaddr_in& receiverAddr, socklen_t& a
 }
 
 int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t addrlen){
+    srand(time(NULL));
     header_t header;
     char dataBuffer[MAX_PACKET_SIZE];
     bool lastPacketSent = false;
@@ -302,13 +304,12 @@ ssize_t SendTo(gobackn_t* gobackn, void *buff, size_t len, int flags, const stru
 
 
 int dataLossCorruptionSim(void *buff, int lossProb, int corruptProb){
-    srand(time(NULL));
-    int loss = rand() % 99;
+    int loss = rand() % 101;
     if (loss <lossProb) {
         cout << "Info: packet lost" << endl;
         return -1;
     }
-    int corrupt = rand() % 99;
+    int corrupt = rand() % 101;
     if (corrupt < corruptProb) {
         ((char*) buff)[0] = ((char*)buff)[0] ^ 0xFF;
         ((char*) buff)[1] = ((char*)buff)[1] ^ 0xFF;
