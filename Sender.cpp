@@ -15,19 +15,18 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <unistd.h>
-
-
 #include "Header.h"
 #include "GobackN.h"
 #include <iostream>
 #include <signal.h>
 
+#define TIMEOUT_INTERVAL 500
 using namespace std;
 
 gobackn_t gobackn_g;
 
 void sighandler(int);
-
+void timeout_handler(int);
 
 int main(int argc, char* argv[]){
     signal(SIGINT, sighandler);
@@ -38,7 +37,7 @@ int main(int argc, char* argv[]){
     timeout_val.tv_usec = (TIMEOUT_INTERVAL*1000)%1000000;
     timerval.it_value = timeout_val;
     timerval.it_interval = timeout_val;
-    gobackn.timer = &timerval;
+    gobackn_g.timer = &timerval;
   
     int socketfd, portNumber, windowSize;
     struct sockaddr_in myAddress;
@@ -80,7 +79,13 @@ int main(int argc, char* argv[]){
     
         sendRequestedFile(&gobackn_g, receiverAddr, addrlen);
         
-       
+        //stop the timer
+        timeval zero_time;
+        zero_time.tv_sec = 0;
+        zero_time.tv_usec = 0;
+        gobackn_g.timer.it_value = zero_time;
+        setitimer(ITIMER_REAL, gobackn_g.timer, NULL);
+      
         //reset gobackn for next request
         gobackn_g.fd_m = NULL;
         gobackn_g.seqstart_m = 0;
