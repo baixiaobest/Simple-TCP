@@ -83,7 +83,7 @@ int main(int argc, char* argv[]){
         timeval zero_time;
         zero_time.tv_sec = 0;
         zero_time.tv_usec = 0;
-        gobackn_g.timer.it_value = zero_time;
+        gobackn_g.timer -> it_value = zero_time;
         setitimer(ITIMER_REAL, gobackn_g.timer, NULL);
       
         //reset gobackn for next request
