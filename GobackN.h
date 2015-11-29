@@ -31,7 +31,7 @@ typedef struct{
     int dataLossProb;
     int dataCorruptProb;
     //the timer used by setitimer
-    timeval* timer;
+    itimerval* timer;
     //whether it is the first time data in the window is sent
     bool initial;
 } gobackn_t;
