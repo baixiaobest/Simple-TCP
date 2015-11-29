@@ -95,7 +95,9 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         ackHeader.sequenceNumber_m = 0;
         ackHeader.checkSum_m = 0;
         ackHeader.dataLength_m = 0;
-        if(header.command_m == (uint16_t)LAST_PACKET && gobackn->seqend_m == header.sequenceNumber_m && packetIsFine){
+        //gobackn->seqend_m is the next packet expected, so when the last packet arrive,
+        //it is expecting last packet + 1
+        if(header.command_m == (uint16_t)LAST_PACKET && gobackn->seqend_m - header.dataLength_m == header.sequenceNumber_m && packetIsFine){
             ackHeader.command_m = (uint16_t) LAST_ACK;
         }
         else{
@@ -109,7 +111,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         Send(gobackn, dataBuffer, HEADERSIZE, 0);
         
         //if the packet processed was the last packet, break out of the loop
-        if(header.command_m == (uint16_t) LAST_PACKET){
+        if(header.command_m == (uint16_t)LAST_PACKET && gobackn->seqend_m - header.dataLength_m == header.sequenceNumber_m && packetIsFine){
             break;
         }
         memset(dataBuffer, 0, MAX_PACKET_SIZE);
@@ -174,7 +176,7 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
     while (true) {
         struct sockaddr_in receiverAddr;
         socklen_t addrlen;
-        if(recvfrom(gobackn->socket_m, dataBuffer, MAX_PACKET_SIZE, 0, (struct sockaddr *) &receiverAddr, &addrlen) == -1){
+        if(recvfrom(gobackn->socket_m, dataBuffer, MAX_PACKET_SIZE, 0, NULL, NULL) == -1){
             cout << "Error: when receiving ACK from receiver, recfrom return -1" << endl;
             close(gobackn->socket_m);
             fclose(gobackn->fd_m);
