@@ -24,24 +24,13 @@
 using namespace std;
 
 gobackn_t gobackn;
-socklen_t addrlen;
-struct sockaddr_in myAddress;
-
 void sighandler(int);
-void timeout_handler(int);
 
 int main(int argc, char* argv[]){
     signal(SIGINT, sighandler);
-    signal(SIGALRM, timeout_handler);
-    itimerval timerval;
-    timeval timeout_val;
-    timeout_val.tv_sec = TIMEOUT_INTERVAL/1000;
-    timeout_val.tv_usec = (TIMEOUT_INTERVAL*1000)%1000000;
-    timerval.it_value = timeout_val;
-    timerval.it_interval = timeout_val;
-    gobackn.timer = &timerval;
     
     int socketfd, portNumber, windowSize;
+    struct sockaddr_in myAddress;
 
     char *dataBuffer;
     header_t header;
@@ -66,8 +55,8 @@ int main(int argc, char* argv[]){
     gobackn.socket_m = socketfd;
     gobackn.seqstart_m = 0;
     gobackn.seqend_m = 0 + windowSize * MAX_DATA_SIZE;
-    gobackn.initial = true;
     sockaddr_in receiverAddr;
+    socklen_t addrlen;
     while (true) {
         cout << "Info: Waiting for request" << endl;
         if(listenForRequest(&gobackn, receiverAddr, addrlen) == -1){
@@ -88,18 +77,9 @@ int main(int argc, char* argv[]){
 
 void sighandler(int signum) {
     if(signum == SIGINT){
-        cout << "INFO: Interuption detected, clean up the program" << endl;
+        cout << "Interuption detected, clean up the program" << endl;
         fclose(gobackn.fd_m);
         close(gobackn.socket_m);
         _exit(1);
-    }
-}
-
-void timeout_handler(int signum) {
-    if(signum == SIGALRM){
-        //dummy value
-        bool lastPacketSent;
-        sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn->initial, myAddress, addrlen, lastPacketSent);
-        cout << "INFO: Timeout! Sender resends data from " << gobackn->seqstart_m << " to " << gobackn->seqend_m <<endl;
     }
 }
