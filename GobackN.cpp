@@ -157,9 +157,12 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
 
     //send all of the content in the window
     gobackn->initial = true;
-    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, gobackn.initial, receiverAddr, addrlen, lastPacketSent) == -1){
+    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, gobackn -> initial, receiverAddr, addrlen, lastPacketSent) == -1){
         cout << "Error: fail to send the data" << endl;
         return -1;
+    }
+    else{
+      setitimer(ITIMER_REAL, gobackn -> timer, NULL);
     }
 
     while (true) {
@@ -186,6 +189,8 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         
         uint32_t newBegin = header.ACKNumber_m;
         uint32_t newEnd = gobackn-> seqend_m;
+        //receive an ACK within the current window, refresh the timer
+        setitimer(ITIMER_REAL, gobackn -> timer, NULL);
 
         //after the last packet has been sent, we don't have to send more packets.
         //we only need to update the (start of) window

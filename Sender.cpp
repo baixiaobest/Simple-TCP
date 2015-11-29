@@ -28,9 +28,18 @@ gobackn_t gobackn_g;
 
 void sighandler(int);
 
+
 int main(int argc, char* argv[]){
     signal(SIGINT, sighandler);
-    
+    signal(SIGALRM, timeout_handler);
+    itimerval timerval;
+    timeval timeout_val;
+    timeout_val.tv_sec = TIMEOUT_INTERVAL/1000;
+    timeout_val.tv_usec = (TIMEOUT_INTERVAL*1000)%1000000;
+    timerval.it_value = timeout_val;
+    timerval.it_interval = timeout_val;
+    gobackn.timer = &timerval;
+  
     int socketfd, portNumber, windowSize;
     struct sockaddr_in myAddress;
 
