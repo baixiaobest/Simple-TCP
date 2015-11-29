@@ -160,13 +160,17 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
     header_t header;
     char dataBuffer[MAX_PACKET_SIZE];
     bool lastPacketSent = false;
-  
+
     //send all of the content in the window
-    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, true, receiverAddr, addrlen, lastPacketSent) == -1){
+    gobackn->initial = true;
+    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, gobackn -> initial, receiverAddr, addrlen, lastPacketSent) == -1){
         cout << "Error: fail to send the data" << endl;
         return -1;
     }
-  
+    else{
+      setitimer(ITIMER_REAL, gobackn -> timer, NULL);
+    }
+
     while (true) {
         struct sockaddr_in receiverAddr;
         socklen_t addrlen;
@@ -193,11 +197,13 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         cout << "Info: Checksum " << ACKChecksum << " " << header.checkSum_m << endl;
         
         //ignore ACK which is out of the bound
-        if(header.ACKNumber_m < gobackn -> seqstart_m || header.ACKNumber_m >= gobackn->seqend_m)
+        if(header.ACKNumber_m <= gobackn -> seqstart_m || header.ACKNumber_m > gobackn->seqend_m)
             continue;
         
         uint32_t newBegin = header.ACKNumber_m;
         uint32_t newEnd = gobackn-> seqend_m;
+        //receive an ACK within the current window, refresh the timer
+        setitimer(ITIMER_REAL, gobackn -> timer, NULL);
 
         //after the last packet has been sent, we don't have to send more packets.
         //we only need to update the (start of) window
@@ -206,7 +212,8 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
             newEnd =(header.ACKNumber_m - gobackn -> seqstart_m) + gobackn-> seqend_m;
             cout << "new end is " << newEnd << endl;
         
-            if(sendData(gobackn -> seqend_m, newEnd, gobackn, false, receiverAddr, addrlen, lastPacketSent) == -1){
+            gobackn->initial = false;
+            if(sendData(gobackn -> seqend_m, newEnd, gobackn, gobackn->initial, receiverAddr, addrlen, lastPacketSent) == -1){
                 cout << "Error: fail to send the data" << endl;
                 return -1;
             }
