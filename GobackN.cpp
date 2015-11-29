@@ -22,6 +22,8 @@
 
 #define UINT32_MAX 0xFFFFFFFF
 
+extern gobackn_t gobackn_g;
+
 using namespace std;
 
 int requestFile(gobackn_t* gobackn, char* fileName){
@@ -174,8 +176,6 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
     }
 
     while (true) {
-        struct sockaddr_in receiverAddr;
-        socklen_t addrlen;
         if(recvfrom(gobackn->socket_m, dataBuffer, MAX_PACKET_SIZE, 0, NULL, NULL) == -1){
             cout << "Error: when receiving ACK from receiver, recfrom return -1" << endl;
             close(gobackn->socket_m);

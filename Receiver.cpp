@@ -15,7 +15,7 @@
 
 using namespace std;
 
-gobackn_t gobackn;
+gobackn_t gobackn_g;
 void sighandler(int);
 
 int main(int argc, char* argv[]){
@@ -36,8 +36,8 @@ int main(int argc, char* argv[]){
     //define sender address
     sender = gethostbyname(argv[1]);
     senderPort = atoi(argv[2]);
-    gobackn.dataLossProb = atoi(argv[4]);
-    gobackn.dataCorruptProb = atoi(argv[5]);
+    gobackn_g.dataLossProb = atoi(argv[4]);
+    gobackn_g.dataCorruptProb = atoi(argv[5]);
     if (sender==NULL) {
         cout << "no such host" << endl;
         return 1;
@@ -55,9 +55,9 @@ int main(int argc, char* argv[]){
     if(connect(socketfd, (struct sockaddr *) &senderAddress, sizeof(senderAddress)) < 0){
         cout << "connection fails" << endl;
     }
-    gobackn.socket_m = socketfd;
-    gobackn.seqend_m = 0;
-    requestFile(&gobackn, fileName);
+    gobackn_g.socket_m = socketfd;
+    gobackn_g.seqend_m = 0;
+    requestFile(&gobackn_g, fileName);
 
 	return 0;
 }
@@ -65,8 +65,8 @@ int main(int argc, char* argv[]){
 void sighandler(int signum) {
     if(signum == SIGINT){
         cout << "Interuption detected, clean up the program" << endl;
-        fclose(gobackn.fd_m);
-        close(gobackn.socket_m);
+        fclose(gobackn_g.fd_m);
+        close(gobackn_g.socket_m);
         _exit(1);
     }
 }
