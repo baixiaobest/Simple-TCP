@@ -17,21 +17,12 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <stdint.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define UINT32_MAX 0xFFFFFFFF
 
 using namespace std;
-
-/*
- This function send the content of the file indicated by begin and end to the socket indicated in gobackn_t.
- It will truncate the data into packets.
- The file pointer will stop at the end position.
- @ begin: begin position of the content to be sent (inclusive)
- @ end: end position of the content to be sent (exclusive)
- @ gobackn: struct to keep info about window size and sequence number. You need specify file descriptor and sender socket. seqstart_m of gobackn is defined by sender.
- @initial: indicate whether it is the first time that this function is called
- @lastPacketSent: lastPacketSent will be set to be true after the last packet has been sent
- return 0 when succeed, return -1 when an error occurs.
- */
-int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sockaddr_in receiverAddr, socklen_t addrlen, bool& lastPacketSent);
 
 int requestFile(gobackn_t* gobackn, char* fileName){
     //initialize request file header.
@@ -51,7 +42,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
     header.checkSum_m = checkSum;
     constructHeader(buffer, header);
     cout << "Request for file " << fileName << endl;
-    send(gobackn->socket_m, buffer, (size_t) (strlen(fileName)+HEADERSIZE+1), 0);
+    Send(gobackn, buffer, (size_t) (strlen(fileName)+HEADERSIZE+1), 0);
     
     //create a new file to save data into it
     gobackn -> fd_m = fopen(fileName, "w");
@@ -109,7 +100,7 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         }
         constructHeader(dataBuffer, ackHeader);
         cout << "Info: Receiver sends an ACK with ACK number: " << ackHeader.ACKNumber_m << endl;
-        send(gobackn->socket_m, dataBuffer, HEADERSIZE, 0);
+        Send(gobackn, dataBuffer, HEADERSIZE, 0);
         
         //if the packet processed was the last packet, break out of the loop
         if(header.command_m == (uint16_t) LAST_PACKET){
@@ -163,17 +154,14 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
     header_t header;
     char dataBuffer[MAX_PACKET_SIZE];
     bool lastPacketSent = false;
-    gobackn -> initial = true;
-  
+
     //send all of the content in the window
-    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, gobackn -> initial, receiverAddr, addrlen, lastPacketSent) == -1){
+    gobackn->initial = true;
+    if(sendData(gobackn->seqstart_m, gobackn->seqend_m, gobackn, gobackn.initial, receiverAddr, addrlen, lastPacketSent) == -1){
         cout << "Error: fail to send the data" << endl;
         return -1;
     }
-    else{
-        setitimer(ITIMER_REAL, gobackn -> timer, NULL);
-    }
-  
+
     while (true) {
         struct sockaddr_in receiverAddr;
         socklen_t addrlen;
@@ -193,13 +181,11 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         cout << "Info: Receive ACK with ACK number " << header.ACKNumber_m << endl;
         
         //ignore ACK which is out of the bound
-        if(header.ACKNumber_m < gobackn -> seqstart_m || header.ACKNumber_m >= gobackn->seqend_m)
+        if(header.ACKNumber_m <= gobackn -> seqstart_m || header.ACKNumber_m > gobackn->seqend_m)
             continue;
         
         uint32_t newBegin = header.ACKNumber_m;
         uint32_t newEnd = gobackn-> seqend_m;
-        //receive an ACK within the current window, refresh the timer
-        setitimer(ITIMER_REAL, gobackn -> timer, NULL);
 
         //after the last packet has been sent, we don't have to send more packets.
         //we only need to update the (start of) window
@@ -208,8 +194,8 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
             newEnd =(header.ACKNumber_m - gobackn -> seqstart_m) + gobackn-> seqend_m;
             cout << "new end is " << newEnd << endl;
         
-            gobackn -> initial = false;
-            if(sendData(gobackn -> seqend_m, newEnd, gobackn, gobackn -> initial, receiverAddr, addrlen, lastPacketSent) == -1){
+            gobackn->initial = false;
+            if(sendData(gobackn -> seqend_m, newEnd, gobackn, gobackn->initial, receiverAddr, addrlen, lastPacketSent) == -1){
                 cout << "Error: fail to send the data" << endl;
                 return -1;
             }
@@ -267,7 +253,7 @@ int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sock
         constructHeader(buffer, header);
         
         cout << "Info: Sender sends packet with sequence number :" << header.sequenceNumber_m << " data length: " << header.dataLength_m << endl;
-        if(sendto(gobackn->socket_m, buffer, HEADERSIZE + header.dataLength_m, 0, (struct sockaddr *) &receiverAddr, addrlen) < 0){
+        if(SendTo(gobackn, buffer, HEADERSIZE + header.dataLength_m, 0, (struct sockaddr *) &receiverAddr, addrlen) < 0){
             cout << "Error: fail to send data" << endl;
             return -1;
         }
@@ -277,3 +263,38 @@ int sendData(uint32_t begin, uint32_t end, gobackn_t* gobackn, bool initial,sock
     }
     return 0;
 }
+
+
+
+ssize_t Send(gobackn_t* gobackn, void *buff, size_t len, int flags){
+    if (dataLossCorruptionSim(buff, gobackn->dataLossProb, gobackn->dataCorruptProb) == -1) {
+        return 0;
+    }
+    return send(gobackn->socket_m, buff, len, flags);
+}
+
+ssize_t SendTo(gobackn_t* gobackn, void *buff, size_t len, int flags, const struct sockaddr *dest_addr, socklen_t addrlen){
+    if (dataLossCorruptionSim(buff, gobackn->dataLossProb, gobackn->dataCorruptProb) == -1) {
+        return 0;
+    }
+    return sendto(gobackn->socket_m, buff, len, flags, dest_addr, addrlen);
+}
+
+
+int dataLossCorruptionSim(void *buff, int lossProb, int corruptProb){
+    srand(time(NULL));
+    int loss = rand() % 99;
+    if (loss <lossProb) {
+        cout << "Info: packet lost" << endl;
+        return -1;
+    }
+    int corrupt = rand() % 99;
+    if (corrupt < corruptProb) {
+        ((char*) buff)[0] = ((char*)buff)[0] ^ 0xFF;
+        ((char*) buff)[1] = ((char*)buff)[1] ^ 0xFF;
+        cout << "Info: packet corrupted" << endl;
+        return 1;
+    }
+    return 0;
+}
+

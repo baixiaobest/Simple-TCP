@@ -4,7 +4,7 @@
 #include <netinet/in.h>  // constants and structures needed for internet domain addresses, e.g. sockaddr_in
 #include <arpa/inet.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 
 #include "Header.h"
 
