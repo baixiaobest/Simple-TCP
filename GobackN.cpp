@@ -291,12 +291,14 @@ int dataLossCorruptionSim(void *buff, int lossProb, int corruptProb){
     srand(time(NULL));
     int loss = rand() % 99;
     if (loss <lossProb) {
+        cout << "Info: packet lost" << endl;
         return -1;
     }
     int corrupt = rand() % 99;
     if (corrupt < corruptProb) {
         ((char*) buff)[0] = ((char*)buff)[0] ^ 0xFF;
         ((char*) buff)[1] = ((char*)buff)[1] ^ 0xFF;
+        cout << "Info: packet corrupted" << endl;
         return 1;
     }
     return 0;

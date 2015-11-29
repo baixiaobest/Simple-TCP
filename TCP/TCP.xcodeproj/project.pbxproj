@@ -28,13 +28,13 @@
 
 /* Begin PBXFileReference section */
 		A933497E1C03D38A005812F5 /* tcp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tcp; sourceTree = BUILT_PRODUCTS_DIR; };
-		A933499F1C03D533005812F5 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../../Makefile; sourceTree = "<group>"; };
-		A93349A11C03D577005812F5 /* GobackN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GobackN.cpp; path = ../../GobackN.cpp; sourceTree = "<group>"; };
-		A93349A21C03D577005812F5 /* GobackN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GobackN.h; path = ../../GobackN.h; sourceTree = "<group>"; };
-		A93349A31C03D577005812F5 /* Header.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Header.cpp; path = ../../Header.cpp; sourceTree = "<group>"; };
-		A93349A41C03D577005812F5 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../Header.h; sourceTree = "<group>"; };
-		A93349A51C03D577005812F5 /* Receiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Receiver.cpp; path = ../../Receiver.cpp; sourceTree = "<group>"; };
-		A93349A61C03D577005812F5 /* Sender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sender.cpp; path = ../../Sender.cpp; sourceTree = "<group>"; };
+		A933499F1C03D533005812F5 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makefile; path = ../Makefile; sourceTree = "<group>"; };
+		A93349A11C03D577005812F5 /* GobackN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GobackN.cpp; path = ../GobackN.cpp; sourceTree = "<group>"; };
+		A93349A21C03D577005812F5 /* GobackN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GobackN.h; path = ../GobackN.h; sourceTree = "<group>"; };
+		A93349A31C03D577005812F5 /* Header.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Header.cpp; path = ../Header.cpp; sourceTree = "<group>"; };
+		A93349A41C03D577005812F5 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../Header.h; sourceTree = "<group>"; };
+		A93349A51C03D577005812F5 /* Receiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Receiver.cpp; path = ../Receiver.cpp; sourceTree = "<group>"; };
+		A93349A61C03D577005812F5 /* Sender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sender.cpp; path = ../Sender.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +132,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A93349791C03D38A005812F5 /* Build configuration list for PBXProject "tcp" */;
+			buildConfigurationList = A93349791C03D38A005812F5 /* Build configuration list for PBXProject "TCP" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -282,7 +282,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A93349791C03D38A005812F5 /* Build configuration list for PBXProject "tcp" */ = {
+		A93349791C03D38A005812F5 /* Build configuration list for PBXProject "TCP" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A93349831C03D38A005812F5 /* Debug */,
@@ -298,6 +298,7 @@
 				A93349871C03D38A005812F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A93349951C03D3F5005812F5 /* Build configuration list for PBXLegacyTarget "make" */ = {
 			isa = XCConfigurationList;
@@ -306,6 +307,7 @@
 				A93349971C03D3F5005812F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
