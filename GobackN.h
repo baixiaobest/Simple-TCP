@@ -10,13 +10,12 @@
 #define GobackN_H
 
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
 #include "Header.h"
 
 
 #define MAX_PACKET_SIZE 1024  //size in bytes for the whole packet
 #define MAX_DATA_SIZE (MAX_PACKET_SIZE - HEADERSIZE)    //size in bytes for the data part
-#define TIMEOUT_INTERVAL 500    //default timeout interval in milliseconds
 
 typedef struct{
      /*requested file descriptor. For receiver, it is the file on disk to save to.
@@ -28,10 +27,8 @@ typedef struct{
     uint32_t seqstart_m;
     //last sequence number in the window (exclusive)
     uint32_t seqend_m;
-    //the timer used by setitimer
-    timeval* timer;
-    //whether it is the first time data in the window is sent
-    bool initial;
+    //a timer that is refreshed when new ACK is received. This is for sender
+    clock_t timer_m;
 } gobackn_t;
 
 /*

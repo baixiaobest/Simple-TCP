@@ -30,9 +30,9 @@ void appendData(char* buffer, char* data, unsigned int dataLength){
 uint16_t calculateChecksum(char*buffer){
     header_t header;
     memcpy(&header, buffer, HEADERSIZE);
-    int originalCheckSum = header.checkSum_m;
-    header.checkSum_m = 0;
-    memcpy(buffer, &header, HEADERSIZE);
+    int originalCheckSum = header.checksum;
+    header.checksum = 0;
+    memcpy(buffer, header, HEADERSIZE);
 
     uint16_t dataLength = ((uint16_t)buffer[10]) << 8 | ((uint16_t)buffer[11] & 0xFF);
     uint32_t checksum = 0;
@@ -50,8 +50,8 @@ uint16_t calculateChecksum(char*buffer){
     }
     //one's complement
     checksum = ~checksum;
-    header.checkSum_m = originalCheckSum;
-    memcpy(buffer, &header, HEADERSIZE);
+    header.checksum = originalCheckSum;
+    memcpy(buffer, header, HEADERSIZE);
     return (uint16_t) (checksum & 0x0000FFFF);
 }
 
