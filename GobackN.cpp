@@ -18,6 +18,7 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 #include <time.h>
+#include <stdlib.h>
 
 #define UINT32_MAX 0xFFFFFFFF
 
