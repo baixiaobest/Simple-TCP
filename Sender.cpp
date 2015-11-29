@@ -111,7 +111,7 @@ void timeout_handler(int signum) {
         //dummy value
         bool lastPacketSent;
         cout << "INFO: Timeout! Sender resends data from " << gobackn_g.seqstart_m << " to " << gobackn_g.seqend_m <<endl;
-      if(sendData(gobackn_g.seqstart_m, gobackn_g.seqend_m, &gobackn_g, gobackn_g.initial, gobackn_g.receiverAddr, gobackn_g.addrlen, lastPacketSent) < 0){
+      if(sendData(gobackn_g.seqstart_m, gobackn_g.seqend_m, &gobackn_g, false, gobackn_g.receiverAddr, gobackn_g.addrlen, lastPacketSent) < 0){
         cout << "Error: Cannot resend data!" << endl;
       }
     }

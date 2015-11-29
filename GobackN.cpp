@@ -172,6 +172,7 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         return -1;
     }
     else{
+      gobackn->initial = false;
       setitimer(ITIMER_REAL, gobackn -> timer, NULL);
     }
 
