@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
     char* fileName;
     header_t header;
     char buffer[HEADERSIZE];
-    if (argc < 4) {
+    if (argc < 6) {
         cout << "no enough arguments." << endl;
         return 1;
     }
@@ -36,6 +36,8 @@ int main(int argc, char* argv[]){
     //define sender address
     sender = gethostbyname(argv[1]);
     senderPort = atoi(argv[2]);
+    gobackn.dataLossProb = atoi(argv[4]);
+    gobackn.dataCorruptProb = atoi(argv[5]);
     if (sender==NULL) {
         cout << "no such host" << endl;
         return 1;

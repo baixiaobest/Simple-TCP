@@ -44,12 +44,14 @@ int main(int argc, char* argv[]){
 
     char *dataBuffer;
     header_t header;
-    if (argc < 3) {
+    if (argc < 5) {
         cout << "No enough inputs";
         return 1;
     }
     portNumber = atoi(argv[1]);
     windowSize = atoi(argv[2]);
+    gobackn.dataLossProb = atoi(argv[3]);
+    gobackn.dataCorruptProb = atoi(argv[4]);
     //define receiver address
     bzero((char*) &myAddress, sizeof(myAddress));
     socketfd = socket(AF_INET, SOCK_DGRAM, 0);  //UDP

@@ -71,12 +71,17 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         if(header.command_m != (uint16_t) DATA && header.command_m != (uint16_t) LAST_PACKET)
             continue;
         
+        uint16_t dataChecksum = calculateChecksum(dataBuffer);
+        
+        bool packetIsFine = dataChecksum == header.checkSum_m;
+        
         cout << "Info: Receiver receives a packet from sender with Sequence: " << header.sequenceNumber_m << " lenghth: " << header.dataLength_m << endl;
+        cout << "Info: Checksum " << dataChecksum << " " << header.checkSum_m << endl;
         
         char* dataReceived = extractData(dataBuffer);
         header_t ackHeader;
-        //if the packet is the next expected packet
-        if(gobackn->seqend_m == header.sequenceNumber_m){
+        //if the packet is the next expected packet and packet is not corrupted
+        if(gobackn->seqend_m == header.sequenceNumber_m && packetIsFine){
             fwrite(dataReceived,sizeof(char) ,header.dataLength_m, gobackn ->fd_m);
             ackHeader.ACKNumber_m = header.sequenceNumber_m + header.dataLength_m;
             gobackn->seqend_m += header.dataLength_m;
@@ -90,14 +95,15 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         ackHeader.sequenceNumber_m = 0;
         ackHeader.checkSum_m = 0;
         ackHeader.dataLength_m = 0;
-        uint16_t checkSum = calculateChecksum(dataBuffer);
-        ackHeader.checkSum_m = checkSum;
-        if(header.command_m == (uint16_t)LAST_PACKET){
+        if(header.command_m == (uint16_t)LAST_PACKET && gobackn->seqend_m == header.sequenceNumber_m && packetIsFine){
             ackHeader.command_m = (uint16_t) LAST_ACK;
         }
         else{
             ackHeader.command_m = (uint16_t) ACK;
         }
+        constructHeader(dataBuffer, ackHeader);
+        uint16_t checkSum = calculateChecksum(dataBuffer);
+        ackHeader.checkSum_m = checkSum;
         constructHeader(dataBuffer, ackHeader);
         cout << "Info: Receiver sends an ACK with ACK number: " << ackHeader.ACKNumber_m << endl;
         Send(gobackn, dataBuffer, HEADERSIZE, 0);
@@ -175,6 +181,12 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
             return -1;
         }
         extractHeader(dataBuffer, &header);
+        uint16_t ACKChecksum = calculateChecksum(dataBuffer);
+        if (header.checkSum_m != ACKChecksum) {
+            cout << "Info: corrupted ACK checksum" << ACKChecksum << " " << header.checkSum_m << endl;
+            continue;
+        }
+        
         if(header.command_m == (uint16_t) LAST_ACK){
             cout << "Info: ACK for last packet received" << endl;
             break;
@@ -182,6 +194,7 @@ int sendRequestedFile(gobackn_t* gobackn,sockaddr_in receiverAddr, socklen_t add
         else if(header.command_m != (uint16_t) ACK)
             continue;
         cout << "Info: Receive ACK with ACK number " << header.ACKNumber_m << endl;
+        cout << "Info: Checksum " << ACKChecksum << " " << header.checkSum_m << endl;
         
         //ignore ACK which is out of the bound
         if(header.ACKNumber_m <= gobackn -> seqstart_m || header.ACKNumber_m > gobackn->seqend_m)
