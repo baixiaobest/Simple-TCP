@@ -50,8 +50,8 @@ int main(int argc, char* argv[]){
     }
     portNumber = atoi(argv[1]);
     windowSize = atoi(argv[2]);
-    gobackn.dataLossProb = atoi(argv[3]);
-    gobackn.dataCorruptProb = atoi(argv[4]);
+    gobackn_g.dataLossProb = atoi(argv[3]);
+    gobackn_g.dataCorruptProb = atoi(argv[4]);
     //define receiver address
     bzero((char*) &myAddress, sizeof(myAddress));
     socketfd = socket(AF_INET, SOCK_DGRAM, 0);  //UDP
