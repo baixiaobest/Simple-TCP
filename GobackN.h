@@ -16,7 +16,6 @@
 
 #define MAX_PACKET_SIZE 1024  //size in bytes for the whole packet
 #define MAX_DATA_SIZE (MAX_PACKET_SIZE - HEADERSIZE)    //size in bytes for the data part
-#define TIMEOUT_INTERVAL 500    //default timeout interval in milliseconds
 
 typedef struct{
      /*requested file descriptor. For receiver, it is the file on disk to save to.
@@ -34,6 +33,8 @@ typedef struct{
     itimerval* timer;
     //whether it is the first time data in the window is sent
     bool initial;
+    sockaddr_in receiverAddr;
+    socklen_t addrlen;
 } gobackn_t;
 
 /*
