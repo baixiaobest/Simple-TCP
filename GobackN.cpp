@@ -113,6 +113,12 @@ int requestFile(gobackn_t* gobackn, char* fileName){
         cout << "Info: Receiver sends an ACK with ACK number: " << ackHeader.ACKNumber_m << endl;
         Send(gobackn, dataBuffer, HEADERSIZE, 0);
         
+        if (ackHeader.command_m==LAST_ACK) {
+            for (int i=0; i<30; i++) {
+                Send(gobackn, dataBuffer, HEADERSIZE, 0);
+            }
+        }
+        
         //if the packet processed was the last packet, break out of the loop
         if(header.command_m == (uint16_t)LAST_PACKET && gobackn->seqend_m - header.dataLength_m == header.sequenceNumber_m && packetIsFine){
             break;
