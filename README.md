@@ -16,7 +16,7 @@ There is a receive that request the file and a sender that send the file.
 
 This is 32bit in width.
 
-There are 4 command types:
+There are 6 command types:
 * 0: Packet is used for data transfer
 * 1: Packet is a request for file
 * 2: Packet is ACK packet
